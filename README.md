@@ -15,7 +15,6 @@
   - [Ça ne marche pas ?](#ça-ne-marche-pas-)
 
 
-
 ## Kézako ?
 
 Un serveur DHCP a pour but de délivrer automatiquement une configuration IP valide aux divers équipements qui se connectent sur un réseau.
@@ -37,8 +36,6 @@ Pour l'avoir, taper simplement: `su` (super user) suivi du mot de passe du compt
 
 > Avant d'éditer chaque fichier, nous en ferons une sauvegarde afin de pouvoir retrouver un fichier exploitable en cas de pepin.  
 > Nous ferons simplement une copie du fichier en rajoutant un ``.old`` à la fin du nom de ce dernier
-
-
 
 
 ## Installation d'ISC DHCP Server:
@@ -83,10 +80,11 @@ Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusi
 
 ![DNS](DNS.png)
 
-Il est possible de modifier les temps de bail (``default-lease-time`` et ``max-lease-time``). Ce temps est donné en secondes et est de 600 par défaut.
+Il est possible de modifier les temps de bail (``default-lease-time`` et ``max-lease-time``). Ces temps sont donnés en secondes.
 
 ### Définir l'IP réseau et le masque de sous-réseau
 Nous allons décommenter (retirer les #) autour de la ligne 30 de sorte à avoir ceci:
+
 ![uncomment](uncomment.png)
 
 Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l'adresse IP et le masque pour correspondre à notre réseau.
@@ -100,6 +98,7 @@ En sachant que les adresses IP début et fin sont distribuées.
 > Ne pas oublier le point virgule ( ; ) en fin de ligne !
 
 Le résultat devrait ressembler à ceci:
+
 ![result](result.png)
 
 Écraser le fichier, et confirmer.
@@ -114,7 +113,8 @@ Regarder si le serveur est fonctionnel avec:
 
 ![bingo](bingo.png)
 
-Félicitations, ton serveur DHCP fonctionne ! 🎉🎉🎉
+Félicitations, ton serveur DHCP fonctionne ! 🎉🎉🎉  
+On peut même voir en bas qu'il a déjà offert une adresse IP à un appareil.
 
 
 ## Ça ne marche pas ?
