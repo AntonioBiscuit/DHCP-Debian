@@ -12,6 +12,8 @@
     - [Définir la passerelle](#définir-la-passerelle)
   - [Verdict...](#verdict)
   - [Ça ne marche pas ?](#ça-ne-marche-pas-)
+    - [Regarder dans les logs](#regarder-dans-les-logs)
+    - [Erreurs répétées](#erreurs-répétées)
 
 ## Kézako ?
 
