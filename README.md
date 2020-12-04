@@ -9,9 +9,9 @@
     - [Définir le DNS distribué par le DHCP](#définir-le-dns-distribué-par-le-dhcp)
     - [Définir l'IP réseau et le masque de sous-réseau](#définir-lip-réseau-et-le-masque-de-sous-réseau)
     - [Définir la plage d'IP à distribuer](#définir-la-plage-dip-à-distribuer)
+    - [Définir la passerelle](#définir-la-passerelle)
   - [Verdict...](#verdict)
   - [Ça ne marche pas ?](#ça-ne-marche-pas-)
-
 
 ## Kézako ?
 
@@ -22,7 +22,7 @@ Pour rappel, un serveur DHCP doit déliver impérativement ces 3 choses au clien
 - Un temps de bail, c'est à dire une durée de validité de l'adresse IP donnée
 - Un masque de sous réseau, sans quoi l'adresse IP est inexploitable   
 
-Optionnellement, il peut distribuer l'adresse d'un serveur DNS, ce que nous ferons; mais aussi une passerelle.
+Optionnellement, il peut distribuer l'adresse d'un serveur DNS, mais aussi une passerelle. Notre DHCP distribuera ces 5 choses.
 
 
 ## Prérequis
@@ -73,7 +73,7 @@ Backup:
 Nous allons seulement changer les options qui seront vraiment nécessaires pour que le DHCP puissse tourner:
 
 ### Définir le DNS distribué par le DHCP
-Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine (``domaine-name``) et un ou plusieurs DNS (``domaine-name-servers``).
+Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine (``domaine-name``) ainsi qu'un ou plusieurs DNS (``domaine-name-servers``).
 Nous mettrons un domaine en ``quelquechose.local`` et un DNS comme ``1.1.1.1``, celui de CloudFlare.   
 Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusieurs:
 
@@ -94,13 +94,20 @@ Nous allons ajouter cette option sur une nouvelle ligne entre les crochets. Elle
 
 En sachant que les adresses IP début et fin sont distribuées.
 
-> Ne pas oublier le point virgule ( ; ) en fin de ligne !
+Ne pas oublier le point virgule ( ; ) en fin de ligne !
 
 Le résultat devrait ressembler à ceci:
 
 ![result](result.png)
 
-Écraser le fichier, et confirmer.
+### Définir la passerelle
+
+Comme pour la plage d'IP nous allons ajouter une option:  
+``option routers IP_passerelle;``
+
+![gateway](gateway.png)
+
+Enfin, écraser le fichier, et confirmer.
 
 ## Verdict...
 
