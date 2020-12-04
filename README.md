@@ -29,7 +29,7 @@ Optionnellement, il peut distribuer l'adresse d'un serveur DNS, mais aussi une p
 
 - Installation Debian fonctionnelle
 - Configuration et/ou interface réseau fonctionnelle avec un accès à Internet
-- Accès Root  
+- Accès Root 
 Pour l'avoir, taper simplement: `su` (super user) suivi du mot de passe du compte root.
 
 > Avant d'éditer chaque fichier, nous en ferons une sauvegarde afin de pouvoir retrouver un fichier exploitable en cas de pepin.  
@@ -119,7 +119,7 @@ Regarder si le serveur est fonctionnel avec:
 
 ![bingo](bingo.png)
 
-Félicitations, ton serveur DHCP fonctionne ! 🎉🎉🎉  
+Félicitations, ton serveur DHCP fonctionne ! 🥳🎉🎉🎉  
 
 
 ## Ça ne marche pas ?
