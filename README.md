@@ -6,20 +6,21 @@
 - Accès Root  
 Pour l'avoir, taper simplement: `su` suivi du mot de passe du compte root.
 
+> [!IMPORTANT]
+> Avant d'éditer chaque fichier, nous en ferons une sauvegarde afin de pouvoir retrouver un fichier exploitable en cas de pepin.  
+> Nous ferons simplement une copie du fichier en rajoutant un ``.old``
+
 ## Installation d'ISC DHCP Server:
+Mettre à jour la liste des paquets puis installer:  
 ``apt update``  
 ``apt install isc-dhcp-server``
 
-Un message d'erreur provenant du serveur DHCP s'affichera juste après la fin de l'installation. 
-Le serveur n'a en effet pas pu démarrer, ce qui est tout à fait normal puisqu'il n'est pas encore été configuré.
+Un message d'erreur provenant du serveur DHCP s'affichera juste à la fin de l'installation. 
+Le serveur a en effet essayé de démarrer mais n'a pas pu, ce qui est tout à fait normal puisqu'il n'est pas encore été configuré.
 
-> [!IMPORTANT]
-> Avant d'éditer chaque fichier, nous en ferons une sauvegarde afin de pouvoir retrouver un fichier exploitable en cas de pepin.  
-> Pour se faire, nous ferons simplement faire une copie du fichier en rajoutant un .``old`` 
 
-## Configuration
+## Indiquer l'interface à utiliser
 
-### Indiquer l'interface à utiliser dans `/etc/default/isc-dhcp-server`
 Backup:  
 ``cp /etc/default/isc-dhcp-server /etc/default/isc-dhcp-server.old``
 
@@ -33,7 +34,7 @@ Exemple avec enp0s3:
 
 Quitter avec CTRL+X, puis confirmer pour écraser le fichier.
 
-### Spécifier les options du DHCP dans `/etc/dhcp/dhcpd.conf`
+## Spécifier les options du DHCP
 Backup:  
 ``cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.old``
 
@@ -48,22 +49,22 @@ Nous allons seulement changer les options qui seront vraiment nécessaires pour 
 > - Un temps de bail
 > - Un masque de sous réseau, sans quoi l'adresse IP est inexploitable   
 
-``Définir le DNS distribué par le DHCP``
-Vers le haut du fichier il sera possible de définir un nom de domaine et un DNS.
-Nous mettrons un domaine en ``quelquechose.local`` et une DNS comme ``1.1.1.1``, celui de CloudFlare.   
+## Définir le DNS distribué par le DHCP
+Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine et un DNS.
+Nous mettrons un domaine en ``quelquechose.local`` et un DNS comme ``1.1.1.1``, celui de CloudFlare.   
 Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusieurs:
 
 ![DNS](DNS.png)
 
 Il est possible de modifier les temps de bail (``default-lease-time`` et ``max-lease-time``). Ce temps est donné en secondes et est de 600 par défaut.
 
-### Définir l'IP + masque de sous-réseau
+## Définir l'IP réseau et le masque de sous-réseau
 Nous allons décommenter (retirer les #) autour de la ligne 30 de sorte à avoir ceci:
 ![uncomment](uncomment.png)
 
 Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l'adresse IP et le masque pour correspondre à notre réseau.
 
-### Plage d'IP à distribuer
+## Plage d'IP à distribuer
 Nous allons ajouter cette option sur une nouvelle ligne entre les crochets. Elle se présente ainsi:  
 ``range adresse_IP_début adresse_IP_fin;``  
 En sachant que les adresses IP début et fin sont distribuées.
@@ -76,7 +77,7 @@ Le résultat devrait ressembler à ceci:
 
 Écraser le fichier, et confirmer.
 
-### Est-ce que ça marche ?
+## Verdict...
 
 Redémarrer le serveur avec:  
 ``systemctl restart isc-dhcp-server``
@@ -86,10 +87,10 @@ Regarder si le serveur est fonctionnel avec:
 
 ![bingo](bingo.png)
 
-Félicitations, ton DHCP fonctionne !
+Félicitations, ton serveur DHCP fonctionne ! 🎉🎉🎉
 
 
-### Ça ne marche pas ?
+## Ça ne marche pas ?
 
 Regarder dans les logs à partir du bas pour voir ce qui ne va pas:
 ``tail -n 25 /var/log/syslog``
