@@ -1,18 +1,35 @@
 # Configurer un serveur DHCP sur Debian 10 (Buster)
 
+## Kézako ?
+
+Un serveur DHCP a pour but de délivrer automatiquement une configuration IP valide aux divers équipements qui se connectent sur un réseau.
+
+Pour rappel, un serveur DHCP doit déliver impérativement ces 3 choses au client: 
+- Une adresse IP
+- Un temps de bail, c'est à dire une durée de validité de l'adresse IP donnée
+- Un masque de sous réseau, sans quoi l'adresse IP est inexploitable   
+
+Optionnellement, un serveur DHCP peut distribuer l'adresse d'un serveur DNS, ce que nous ferons; mais aussi une passerelle.
+
+
 ## Prérequis
 
-- Configuration et/ou interface réseau déjà fonctionnelle
+- Installation Debian fonctionnelle
+- Configuration et/ou interface réseau fonctionnelle avec un accès à Internet
 - Accès Root  
-Pour l'avoir, taper simplement: `su` suivi du mot de passe du compte root.
+Pour l'avoir, taper simplement: `su` (super user) suivi du mot de passe du compte root.
 
-> [!IMPORTANT]
 > Avant d'éditer chaque fichier, nous en ferons une sauvegarde afin de pouvoir retrouver un fichier exploitable en cas de pepin.  
 > Nous ferons simplement une copie du fichier en rajoutant un ``.old``
 
+
+
+
 ## Installation d'ISC DHCP Server:
-Mettre à jour la liste des paquets puis installer:  
+Mettre à jour la liste des paquets:  
 ``apt update``  
+
+Puis installer:  
 ``apt install isc-dhcp-server``
 
 Un message d'erreur provenant du serveur DHCP s'affichera juste à la fin de l'installation. 
@@ -43,12 +60,6 @@ Backup:
 
 Nous allons seulement changer les options qui seront vraiment nécessaires pour que le DHCP puissse tourner:
 
-> [!TIP]
-> Pour rappel, un serveur DHCP doit déliver impérativement ces 3 choses au client: 
-> - Une adresse IP
-> - Un temps de bail
-> - Un masque de sous réseau, sans quoi l'adresse IP est inexploitable   
-
 ## Définir le DNS distribué par le DHCP
 Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine et un DNS.
 Nous mettrons un domaine en ``quelquechose.local`` et un DNS comme ``1.1.1.1``, celui de CloudFlare.   
@@ -67,10 +78,10 @@ Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l
 ## Plage d'IP à distribuer
 Nous allons ajouter cette option sur une nouvelle ligne entre les crochets. Elle se présente ainsi:  
 ``range adresse_IP_début adresse_IP_fin;``  
+
 En sachant que les adresses IP début et fin sont distribuées.
 
-> [!CAUTION]
-> Attention à ne pas oublier le point virgule ( ; ) en fin de la ligne !
+> Ne pas oublier le point virgule ( ; ) en fin de ligne !
 
 Le résultat devrait ressembler à ceci:
 ![result](result.png)
