@@ -40,17 +40,24 @@ Backup:
 Éditer le fichier:  
 ``nano /etc/dhcp/dhcpd.conf``
 
-De nombreuses options sont disponibles mais nous allons seulement changer les options qui seront vraiment nécessaires pour que le DHCP puissse tourner:
+Nous allons seulement changer les options qui seront vraiment nécessaires pour que le DHCP puissse tourner:
 
 > [!TIP]
 > Pour rappel, un serveur DHCP doit déliver impérativement ces 3 choses au client: 
 > - Une adresse IP
 > - Un temps de bail
-> - Un masque de sous réseau, sans quoi l'adresse IP est inexploitable 
-> 
-Le temps de bail étant déjà spécifié par défaut, il ne nous reste qu'à spécifier une plage d'IP à distribuer ainsi que le masque de sous-réseau:
+> - Un masque de sous réseau, sans quoi l'adresse IP est inexploitable   
 
-#### Activer les options et définir l'IP + masque de réseau
+``Définir le DNS distribué par le DHCP``
+Vers le haut du fichier il sera possible de définir un nom de domaine et un DNS.
+Nous mettrons un domaine en ``quelquechose.local`` et une DNS comme ``1.1.1.1``, celui de CloudFlare.   
+Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusieurs:
+
+:::image type="content" source="DNS.png" alt-text=" ":::
+
+Il est possible de modifier les temps de bail (``default-lease-time`` et ``max-lease-time``). Ce temps est donné en secondes et est de 600 par défaut.
+
+#### Définir l'IP + masque de sous-réseau
 Nous allons décommenter (retirer les #) autour de la ligne 30 de sorte à avoir ceci:
 :::image type="content" source="uncomment.png" alt-text=" ":::
 
@@ -59,10 +66,23 @@ Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l
 #### Plage d'IP à distribuer
 Nous allons ajouter cette option sur une nouvelle ligne entre les crochets. Elle se présente ainsi:  
 ``range adresse_IP_début adresse_IP_fin;``  
-En sachant que les adresse IP début et fin sont distribuées.
+En sachant que les adresses IP début et fin sont distribuées.
 
 > [!CAUTION]
 > Attention à ne pas oublier le point virgule ( ; ) en fin de la ligne !
+
+Le résultat devrait ressembler à ceci:
+:::image type="content" source="result.png" alt-text=" ":::
+
+Écraser le fichier, et confirmer.
+
+### Est-ce que ça marche ?
+
+Redémarrer le serveur avec:  
+``systemctl restart isc-dhcp-server``
+
+Regarder si le serveur est fonctionnel avec:  
+``systemctl status isc-dhcp-server``
 
 Décommenter `authoritative`
 
