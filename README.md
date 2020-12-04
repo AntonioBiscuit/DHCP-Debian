@@ -1,5 +1,21 @@
 # Configurer un serveur DHCP sur Debian 10 (Buster)
 
+## Sommaire
+- [Configurer un serveur DHCP sur Debian 10 (Buster)](#configurer-un-serveur-dhcp-sur-debian-10-buster)
+  - [Sommaire](#sommaire)
+  - [Kézako ?](#kézako-)
+  - [Prérequis](#prérequis)
+  - [Installation d'ISC DHCP Server:](#installation-disc-dhcp-server)
+  - [Indiquer l'interface réseau à utiliser](#indiquer-linterface-réseau-à-utiliser)
+  - [Spécifier les options du DHCP](#spécifier-les-options-du-dhcp)
+    - [Définir le DNS distribué par le DHCP](#définir-le-dns-distribué-par-le-dhcp)
+    - [Définir l'IP réseau et le masque de sous-réseau](#définir-lip-réseau-et-le-masque-de-sous-réseau)
+    - [Plage d'IP à distribuer](#plage-dip-à-distribuer)
+  - [Verdict...](#verdict)
+  - [Ça ne marche pas ?](#ça-ne-marche-pas-)
+
+
+
 ## Kézako ?
 
 Un serveur DHCP a pour but de délivrer automatiquement une configuration IP valide aux divers équipements qui se connectent sur un réseau.
