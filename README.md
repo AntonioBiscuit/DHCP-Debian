@@ -9,7 +9,7 @@ Pour rappel, un serveur DHCP doit déliver impérativement ces 3 choses au clien
 - Un temps de bail, c'est à dire une durée de validité de l'adresse IP donnée
 - Un masque de sous réseau, sans quoi l'adresse IP est inexploitable   
 
-Optionnellement, un serveur DHCP peut distribuer l'adresse d'un serveur DNS, ce que nous ferons; mais aussi une passerelle.
+Optionnellement, il peut distribuer l'adresse d'un serveur DNS, ce que nous ferons; mais aussi une passerelle.
 
 
 ## Prérequis
@@ -20,7 +20,7 @@ Optionnellement, un serveur DHCP peut distribuer l'adresse d'un serveur DNS, ce 
 Pour l'avoir, taper simplement: `su` (super user) suivi du mot de passe du compte root.
 
 > Avant d'éditer chaque fichier, nous en ferons une sauvegarde afin de pouvoir retrouver un fichier exploitable en cas de pepin.  
-> Nous ferons simplement une copie du fichier en rajoutant un ``.old``
+> Nous ferons simplement une copie du fichier en rajoutant un ``.old`` à la fin du nom de ce dernier
 
 
 
@@ -33,10 +33,10 @@ Puis installer:
 ``apt install isc-dhcp-server``
 
 Un message d'erreur provenant du serveur DHCP s'affichera juste à la fin de l'installation. 
-Le serveur a en effet essayé de démarrer mais n'a pas pu, ce qui est tout à fait normal puisqu'il n'est pas encore été configuré.
+Le serveur a en effet essayé de démarrer mais n'a pas réussi, ce qui est tout à fait normal puisqu'il n'est pas encore été configuré.
 
 
-## Indiquer l'interface à utiliser
+## Indiquer l'interface réseau à utiliser
 
 Backup:  
 ``cp /etc/default/isc-dhcp-server /etc/default/isc-dhcp-server.old``
@@ -44,7 +44,7 @@ Backup:
 Éditer le fichier:  
 ``nano /etc/default/isc-dhcp-server``
 
-Il faudra vers le bas de celui-ci ajouter le nom de l'interface réseau à utiliser.  
+Il faudra vers le bas de celui-ci spécifier l'interface réseau à utiliser.  
 Exemple avec enp0s3:
 
 ![interface](interface.png)
@@ -60,7 +60,7 @@ Backup:
 
 Nous allons seulement changer les options qui seront vraiment nécessaires pour que le DHCP puissse tourner:
 
-## Définir le DNS distribué par le DHCP
+### Définir le DNS distribué par le DHCP
 Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine et un DNS.
 Nous mettrons un domaine en ``quelquechose.local`` et un DNS comme ``1.1.1.1``, celui de CloudFlare.   
 Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusieurs:
@@ -69,13 +69,13 @@ Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusi
 
 Il est possible de modifier les temps de bail (``default-lease-time`` et ``max-lease-time``). Ce temps est donné en secondes et est de 600 par défaut.
 
-## Définir l'IP réseau et le masque de sous-réseau
+### Définir l'IP réseau et le masque de sous-réseau
 Nous allons décommenter (retirer les #) autour de la ligne 30 de sorte à avoir ceci:
 ![uncomment](uncomment.png)
 
 Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l'adresse IP et le masque pour correspondre à notre réseau.
 
-## Plage d'IP à distribuer
+### Plage d'IP à distribuer
 Nous allons ajouter cette option sur une nouvelle ligne entre les crochets. Elle se présente ainsi:  
 ``range adresse_IP_début adresse_IP_fin;``  
 
