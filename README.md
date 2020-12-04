@@ -124,10 +124,17 @@ Félicitations, ton serveur DHCP fonctionne ! 🥳🎉🎉🎉
 
 ## Ça ne marche pas ?
 
-Regarder dans les logs à partir du bas pour voir ce qui ne va pas:
+### Regarder dans les logs 
+Afficher les logs à partir du bas pour voir ce qui ne va pas:
 ``tail -n 25 /var/log/syslog``
 
-``tail`` Permet d'afficher à partir du bas du fichier (en l'occurence, le fichier log peut-être TRÈS LONG).  
+``tail`` Affiche à partir du bas du fichier (le fichier log peut-être TRÈS LONG).  
 ``-n`` Spécifie le nombre de lignes à récupérer
 
-Il peut être nécessaire de supprimer le fichier
+### Erreurs répétées
+
+Supprimer le fichier dhcpd.pid:  
+``rm /var/run/dhcpd.pid``
+
+Puis tenter de redémarrer le serveur:  
+``systemctl restart isc-dhcp-server``
