@@ -29,7 +29,8 @@ Backup:
 
 Il faudra vers le bas de celui-ci ajouter le nom de l'interface réseau à utiliser.  
 Exemple avec enp0s3:
-:::image type="content" source="interface.png" alt-text=" ":::
+
+![interface](interface.png)
 
 Quitter avec CTRL+X, puis confirmer pour écraser le fichier.
 
@@ -53,13 +54,13 @@ Vers le haut du fichier il sera possible de définir un nom de domaine et un DNS
 Nous mettrons un domaine en ``quelquechose.local`` et une DNS comme ``1.1.1.1``, celui de CloudFlare.   
 Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusieurs:
 
-:::image type="content" source="DNS.png" alt-text=" ":::
+![DNS](DNS.png)
 
 Il est possible de modifier les temps de bail (``default-lease-time`` et ``max-lease-time``). Ce temps est donné en secondes et est de 600 par défaut.
 
 #### Définir l'IP + masque de sous-réseau
 Nous allons décommenter (retirer les #) autour de la ligne 30 de sorte à avoir ceci:
-:::image type="content" source="uncomment.png" alt-text=" ":::
+![uncomment](uncomment.png)
 
 Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l'adresse IP et le masque pour correspondre à notre réseau.
 
@@ -72,7 +73,7 @@ En sachant que les adresses IP début et fin sont distribuées.
 > Attention à ne pas oublier le point virgule ( ; ) en fin de la ligne !
 
 Le résultat devrait ressembler à ceci:
-:::image type="content" source="result.png" alt-text=" ":::
+![result](result.png)
 
 Écraser le fichier, et confirmer.
 
@@ -83,6 +84,8 @@ Redémarrer le serveur avec:
 
 Regarder si le serveur est fonctionnel avec:  
 ``systemctl status isc-dhcp-server``
+
+![bingo](bingo.png)
 
 Décommenter `authoritative`
 
