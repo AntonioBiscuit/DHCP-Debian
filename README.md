@@ -1,8 +1,6 @@
 # Configurer un serveur DHCP sur Debian 10 (Buster)
 
 ## Sommaire
-- [Configurer un serveur DHCP sur Debian 10 (Buster)](#configurer-un-serveur-dhcp-sur-debian-10-buster)
-  - [Sommaire](#sommaire)
   - [Kézako ?](#kézako-)
   - [Prérequis](#prérequis)
   - [Installation d'ISC DHCP Server:](#installation-disc-dhcp-server)
@@ -10,7 +8,7 @@
   - [Spécifier les options du DHCP](#spécifier-les-options-du-dhcp)
     - [Définir le DNS distribué par le DHCP](#définir-le-dns-distribué-par-le-dhcp)
     - [Définir l'IP réseau et le masque de sous-réseau](#définir-lip-réseau-et-le-masque-de-sous-réseau)
-    - [Plage d'IP à distribuer](#plage-dip-à-distribuer)
+    - [Définir la plage d'IP à distribuer](#définir-la-plage-dip-à-distribuer)
   - [Verdict...](#verdict)
   - [Ça ne marche pas ?](#ça-ne-marche-pas-)
 
@@ -57,7 +55,8 @@ Backup:
 Éditer le fichier:  
 ``nano /etc/default/isc-dhcp-server``
 
-Il faudra vers le bas de celui-ci spécifier l'interface réseau à utiliser.  
+Il faudra vers le bas de celui-ci spécifier l'interface réseau entre les guillemets de la ligne ``INTERFACESv4=""``  
+On commentera la ligne ``INTERFACESv6`` puisque nous n'utiliserons pas d'IPv6.  
 Exemple avec enp0s3:
 
 ![interface](interface.png)
@@ -74,7 +73,7 @@ Backup:
 Nous allons seulement changer les options qui seront vraiment nécessaires pour que le DHCP puissse tourner:
 
 ### Définir le DNS distribué par le DHCP
-Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine et un DNS.
+Vers le haut du fichier ``dhcpd.conf``, il sera possible de définir un nom de domaine (``domaine-name``) et un ou plusieurs DNS (``domaine-name-servers``).
 Nous mettrons un domaine en ``quelquechose.local`` et un DNS comme ``1.1.1.1``, celui de CloudFlare.   
 Les DNS doivent être séparés par une virgule si l'on souhaite en mettre plusieurs:
 
@@ -89,7 +88,7 @@ Nous allons décommenter (retirer les #) autour de la ligne 30 de sorte à avoir
 
 Nous pouvons ensuite sur cette ligne (la seule en blanche sur l'image) changer l'adresse IP et le masque pour correspondre à notre réseau.
 
-### Plage d'IP à distribuer
+### Définir la plage d'IP à distribuer
 Nous allons ajouter cette option sur une nouvelle ligne entre les crochets. Elle se présente ainsi:  
 ``range adresse_IP_début adresse_IP_fin;``  
 
@@ -114,7 +113,6 @@ Regarder si le serveur est fonctionnel avec:
 ![bingo](bingo.png)
 
 Félicitations, ton serveur DHCP fonctionne ! 🎉🎉🎉  
-On peut même voir en bas qu'il a déjà offert une adresse IP à un appareil.
 
 
 ## Ça ne marche pas ?
@@ -124,3 +122,5 @@ Regarder dans les logs à partir du bas pour voir ce qui ne va pas:
 
 ``tail`` Permet d'afficher à partir du bas du fichier (en l'occurence, le fichier log peut-être TRÈS LONG).  
 ``-n`` Spécifie le nombre de lignes à récupérer
+
+Il peut être nécessaire de supprimer le fichier
