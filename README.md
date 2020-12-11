@@ -17,7 +17,7 @@
 
 ## Kézako ?
 
-Un serveur DHCP a pour but de délivrer automatiquement une configuration IP valide aux divers équipements qui se connectent sur un réseau.
+Un serveur DHCP (Dynamic Host Configuration Protocol) a pour but de délivrer automatiquement une configuration IP valide aux divers équipements qui se connectent sur un réseau.
 
 Pour rappel, un serveur DHCP doit déliver impérativement ces 3 choses au client: 
 - Une adresse IP
